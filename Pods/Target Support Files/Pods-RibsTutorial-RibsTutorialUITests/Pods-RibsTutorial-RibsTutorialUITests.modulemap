@@ -1,0 +1,6 @@
+framework module Pods_RibsTutorial_RibsTutorialUITests {
+  umbrella header "Pods-RibsTutorial-RibsTutorialUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
