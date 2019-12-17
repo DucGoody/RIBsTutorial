@@ -12,7 +12,7 @@ import RIBs
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    public var window: UIWindow?
+    var window: UIWindow?
     private var launchRouter: LaunchRouting?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

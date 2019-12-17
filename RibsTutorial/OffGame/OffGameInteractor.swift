@@ -1,40 +1,35 @@
 //
-//  RootInteractor.swift
+//  OffGameInteractor.swift
 //  RibsTutorial
 //
-//  Created by DUCHV3 on 12/16/19.
+//  Created by HoangVanDuc on 12/17/19.
 //  Copyright © 2019 DUCHV3. All rights reserved.
 //
 
 import RIBs
 import RxSwift
 
-protocol RootRouting: ViewableRouting {
-    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String)
+protocol OffGameRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
-protocol RootPresentable: Presentable {
-    var listener: RootPresentableListener? { get set }
+protocol OffGamePresentable: Presentable {
+    var listener: OffGamePresentableListener? { get set }
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol RootListener: class {
+protocol OffGameListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
-final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
-    
-    func didLogin(withPlayer1Name player1Name: String, player2Name: String) {
-        router?.routeToLoggedIn(withPlayer1Name: player1Name, player2Name: player2Name)
-    }
+final class OffGameInteractor: PresentableInteractor<OffGamePresentable>, OffGameInteractable, OffGamePresentableListener {
 
-    weak var router: RootRouting?
-    weak var listener: RootListener?
+    weak var router: OffGameRouting?
+    weak var listener: OffGameListener?
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: RootPresentable) {
+    override init(presenter: OffGamePresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }

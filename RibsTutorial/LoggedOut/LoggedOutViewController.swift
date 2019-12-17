@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import RxCocoa
 import UIKit
 import SnapKit
 
@@ -23,57 +24,18 @@ final class LoggedOutViewController: UIViewController, LoggedOutPresentable, Log
     private var player1Field: UITextField!
     private var player2Field: UITextField!
     
+    @IBOutlet weak var player2TextField: UITextField!
+    @IBOutlet weak var player1TextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    let bag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let playerFields = buildPlayerFields()
-        buildLoginButton(withPlayer1: playerFields.player1Field, withPlayer2: playerFields.player2Field)
-        let view = self.view
-    }
-    
-    private func buildPlayerFields() -> (player1Field: UITextField, player2Field: UITextField) {
-        let player1Field = UITextField()
-        self.player1Field = player1Field
-        player1Field.borderStyle = .line
-        view.addSubview(player1Field)
-        player1Field.placeholder = "Player 1 name"
-        player1Field.snp.makeConstraints { (view) in
-            view.top.equalTo(self.view).offset(100)
-            view.leading.trailing.equalTo(self.view).inset(40)
-            view.height.equalTo(40)
-        }
+        print("viewDidLoad LoggedOutViewController")
         
-        let player2Field = UITextField()
-        self.player2Field = player2Field
-        player2Field.borderStyle = .line
-        view.addSubview(player2Field)
-        player2Field.placeholder = "Player 2 name"
-        player2Field.snp.makeConstraints { (maker: ConstraintMaker) in
-            maker.top.equalTo(player1Field.snp.bottom).offset(20)
-            maker.left.right.height.equalTo(player1Field)
-        }
-        
-        return (player1Field, player2Field)
-    }
-    
-    private func buildLoginButton(withPlayer1: UITextField,withPlayer2: UITextField) {
-        let loginButton = UIButton()
-        view.addSubview(loginButton)
-        loginButton.snp.makeConstraints { (view) in
-            view.top.equalTo(player2Field.snp.bottom).offset(20)
-            view.left.right.height.equalTo(player1Field)
-        }
-        
-        loginButton.setTitle("Login", for: .normal)
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = .black
-        loginButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
-    }
-    
-    func present(viewController: ViewControllable) {
-        present(viewController.uiviewController, animated: true, completion: nil)
-    }
-    
-    @objc private func didTapLogin(){
-        listener?.login(withPlayer1Name: player1Field?.text, player2Name: player2Field?.text)
+        loginButton.rx.tap.asDriver()
+            .drive(onNext: { [unowned self] in
+                self.listener?.login(withPlayer1Name: self.player1TextField.text, player2Name: self.player2TextField.text)
+            }).disposed(by: bag)
     }
 }

@@ -7,7 +7,7 @@
 ////
 //
 //import RIBs
-//
+// logout
 //protocol LoggedOutDependency {}
 //
 //protocol LoggedOutListener {}
@@ -31,3 +31,23 @@
 //        return ViewableRouter<Interactable, ViewControllable>(interactor: LoggedOutInteractor(), viewController: LoggedOutViewController())
 //    }
 //}
+
+//LoggedIn
+
+//class LoggedInComponent {}
+//
+//protocol LoggedInDependency {}
+//
+//protocol OffGameDependency {}
+//
+//protocol LoggedInViewControllable {}
+//
+//protocol LoggedInBuildable {}
+//
+//protocol LoggedInListener {}
+//
+//protocol LoggedInRouting {}
+//
+//protocol LoggedInInteractable {}
+//
+//extension RootViewController: LoggedInViewControllable {}
