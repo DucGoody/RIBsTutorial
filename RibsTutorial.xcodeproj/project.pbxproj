@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		345B17C9C19CAA728BD2D31C /* Pods_RibsTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B716D8E314A225827A03BC2B /* Pods_RibsTutorial.framework */; };
 		391CF88AAC1572142306E52A /* Pods_RibsTutorial_RibsTutorialUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F99D5DA748238A3BEBD76B /* Pods_RibsTutorial_RibsTutorialUITests.framework */; };
+		614636DE23A875CA00844A16 /* LoggedOutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614636DD23A875CA00844A16 /* LoggedOutViewController.xib */; };
+		614636E323A875F100844A16 /* LoggedOutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636DF23A875F000844A16 /* LoggedOutRouter.swift */; };
+		614636E423A875F100844A16 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E023A875F000844A16 /* LoggedOutViewController.swift */; };
+		614636E523A875F100844A16 /* LoggedOutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E123A875F000844A16 /* LoggedOutBuilder.swift */; };
+		614636E623A875F100844A16 /* LoggedOutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E223A875F000844A16 /* LoggedOutInteractor.swift */; };
 		614690A723A79A0400A541B7 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614690A623A79A0400A541B7 /* AppComponent.swift */; };
 		614A939923A78F4E00C62271 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614A939823A78F4E00C62271 /* AppDelegate.swift */; };
 		614A939B23A78F4E00C62271 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614A939A23A78F4E00C62271 /* SceneDelegate.swift */; };
@@ -50,6 +55,11 @@
 		3906A24895607A02355FCDD7 /* Pods_RibsTutorialTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RibsTutorialTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC234B10EE19346818BDB38 /* Pods-RibsTutorialTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RibsTutorialTests.release.xcconfig"; path = "Target Support Files/Pods-RibsTutorialTests/Pods-RibsTutorialTests.release.xcconfig"; sourceTree = "<group>"; };
 		5AB03AAD89A8F97B5E8909FC /* Pods-RibsTutorial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RibsTutorial.debug.xcconfig"; path = "Target Support Files/Pods-RibsTutorial/Pods-RibsTutorial.debug.xcconfig"; sourceTree = "<group>"; };
+		614636DD23A875CA00844A16 /* LoggedOutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoggedOutViewController.xib; sourceTree = "<group>"; };
+		614636DF23A875F000844A16 /* LoggedOutRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutRouter.swift; sourceTree = "<group>"; };
+		614636E023A875F000844A16 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
+		614636E123A875F000844A16 /* LoggedOutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutBuilder.swift; sourceTree = "<group>"; };
+		614636E223A875F000844A16 /* LoggedOutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutInteractor.swift; sourceTree = "<group>"; };
 		614690A623A79A0400A541B7 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 		614A939523A78F4E00C62271 /* RibsTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RibsTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614A939823A78F4E00C62271 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +126,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		614636DC23A8759000844A16 /* LoggedOut */ = {
+			isa = PBXGroup;
+			children = (
+				614636DD23A875CA00844A16 /* LoggedOutViewController.xib */,
+				614636DF23A875F000844A16 /* LoggedOutRouter.swift */,
+				614636E023A875F000844A16 /* LoggedOutViewController.swift */,
+				614636E123A875F000844A16 /* LoggedOutBuilder.swift */,
+				614636E223A875F000844A16 /* LoggedOutInteractor.swift */,
+			);
+			path = LoggedOut;
+			sourceTree = "<group>";
+		};
 		614690A523A799F500A541B7 /* AppStart */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +171,7 @@
 		614A939723A78F4E00C62271 /* RibsTutorial */ = {
 			isa = PBXGroup;
 			children = (
+				614636DC23A8759000844A16 /* LoggedOut */,
 				614690A523A799F500A541B7 /* AppStart */,
 				614A93C823A7976000C62271 /* Root */,
 				614A939823A78F4E00C62271 /* AppDelegate.swift */,
@@ -312,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				614A93A523A78F5000C62271 /* LaunchScreen.storyboard in Resources */,
+				614636DE23A875CA00844A16 /* LoggedOutViewController.xib in Resources */,
 				614A93A223A78F5000C62271 /* Assets.xcassets in Resources */,
 				614A93A023A78F4E00C62271 /* Main.storyboard in Resources */,
 			);
@@ -442,12 +466,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				614A93CE23A7977200C62271 /* RootViewController.swift in Sources */,
+				614636E623A875F100844A16 /* LoggedOutInteractor.swift in Sources */,
+				614636E323A875F100844A16 /* LoggedOutRouter.swift in Sources */,
+				614636E523A875F100844A16 /* LoggedOutBuilder.swift in Sources */,
 				614A93CD23A7977200C62271 /* RootRouter.swift in Sources */,
 				614A93D023A7977200C62271 /* RootInteractor.swift in Sources */,
 				614A939D23A78F4E00C62271 /* ViewController.swift in Sources */,
 				614A939923A78F4E00C62271 /* AppDelegate.swift in Sources */,
 				614690A723A79A0400A541B7 /* AppComponent.swift in Sources */,
 				614A939B23A78F4E00C62271 /* SceneDelegate.swift in Sources */,
+				614636E423A875F100844A16 /* LoggedOutViewController.swift in Sources */,
 				614A93D223A7983100C62271 /* DELETE_ME.swift in Sources */,
 				614A93CF23A7977200C62271 /* RootBuilder.swift in Sources */,
 			);

@@ -22,7 +22,6 @@ final class RootComponent: Component<RootDependency> {
 
 protocol RootBuildable: Buildable {
     func build() -> LaunchRouting
-//    func build(withListener listener: RootListener) -> RootRouting
 }
 
 final class RootBuilder: Builder<RootDependency>, RootBuildable {
@@ -35,18 +34,10 @@ final class RootBuilder: Builder<RootDependency>, RootBuildable {
         let component = RootComponent(dependency: dependency)
         let viewController = RootViewController()
         let interactor = RootInteractor(presenter: viewController)
-
+        
         let loggedOutBuilder = LoggedOutBuilder(dependency: component)
         return RootRouter(interactor: interactor,
                           viewController: viewController,
                           loggedOutBuilder: loggedOutBuilder)
     }
-
-//    func build(withListener listener: RootListener) -> RootRouting {
-//        let component = RootComponent(dependency: dependency)
-//        let viewController = RootViewController()
-//        let interactor = RootInteractor(presenter: viewController)
-//        interactor.listener = listener
-//        return RootRouter(interactor: interactor, viewController: viewController)
-//    }
 }
