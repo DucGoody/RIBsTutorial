@@ -14,6 +14,7 @@
 		614636E423A875F100844A16 /* LoggedOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E023A875F000844A16 /* LoggedOutViewController.swift */; };
 		614636E523A875F100844A16 /* LoggedOutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E123A875F000844A16 /* LoggedOutBuilder.swift */; };
 		614636E623A875F100844A16 /* LoggedOutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E223A875F000844A16 /* LoggedOutInteractor.swift */; };
+		614636E823A8819A00844A16 /* RootComponent+LoggedOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614636E723A8819A00844A16 /* RootComponent+LoggedOut.swift */; };
 		614690A723A79A0400A541B7 /* AppComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614690A623A79A0400A541B7 /* AppComponent.swift */; };
 		614A939923A78F4E00C62271 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614A939823A78F4E00C62271 /* AppDelegate.swift */; };
 		614A939B23A78F4E00C62271 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614A939A23A78F4E00C62271 /* SceneDelegate.swift */; };
@@ -60,6 +61,7 @@
 		614636E023A875F000844A16 /* LoggedOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutViewController.swift; sourceTree = "<group>"; };
 		614636E123A875F000844A16 /* LoggedOutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutBuilder.swift; sourceTree = "<group>"; };
 		614636E223A875F000844A16 /* LoggedOutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutInteractor.swift; sourceTree = "<group>"; };
+		614636E723A8819A00844A16 /* RootComponent+LoggedOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootComponent+LoggedOut.swift"; sourceTree = "<group>"; };
 		614690A623A79A0400A541B7 /* AppComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppComponent.swift; sourceTree = "<group>"; };
 		614A939523A78F4E00C62271 /* RibsTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RibsTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		614A939823A78F4E00C62271 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				614A93CB23A7977200C62271 /* RootBuilder.swift */,
 				614A93CC23A7977200C62271 /* RootInteractor.swift */,
 				614A93D123A7983100C62271 /* DELETE_ME.swift */,
+				614636E723A8819A00844A16 /* RootComponent+LoggedOut.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				614636E823A8819A00844A16 /* RootComponent+LoggedOut.swift in Sources */,
 				614A93CE23A7977200C62271 /* RootViewController.swift in Sources */,
 				614636E623A875F100844A16 /* LoggedOutInteractor.swift in Sources */,
 				614636E323A875F100844A16 /* LoggedOutRouter.swift in Sources */,
