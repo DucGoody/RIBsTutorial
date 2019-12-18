@@ -9,8 +9,16 @@
 import RIBs
 import RxSwift
 
+public protocol RootActionableItem: class {
+    func waitForLogin() -> Observable<(LoggedInActionableItem, ())>
+}
+
+public protocol LoggedInActionableItem: class {
+    func launchGame(with id: String?) -> Observable<(LoggedInActionableItem, ())>
+}
+
 protocol RootRouting: ViewableRouting {
-    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String)
+    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String) -> LoggedInActionableItem
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
@@ -23,14 +31,11 @@ protocol RootListener: class {
     // TODO: Declare methods the interactor can invoke to communicate with other RIBs.
 }
 
-final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
+final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener, UrlHandler, RootActionableItem {
     
-    func didLogin(withPlayer1Name player1Name: String, player2Name: String) {
-        router?.routeToLoggedIn(withPlayer1Name: player1Name, player2Name: player2Name)
-    }
-
     weak var router: RootRouting?
     weak var listener: RootListener?
+    private let loggedInActionableItemSubject = ReplaySubject<LoggedInActionableItem>.create(bufferSize: 1)
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
@@ -47,5 +52,27 @@ final class RootInteractor: PresentableInteractor<RootPresentable>, RootInteract
     override func willResignActive() {
         super.willResignActive()
         // TODO: Pause any business logic.
+    }
+    
+    // UrlHandler
+    func handle(_ url: URL) {
+        let launchGameWorkflow = LaunchGameWorkflow(url: url)
+        launchGameWorkflow
+            .subscribe(self)
+            .disposeOnDeactivate(interactor: self)
+    }
+    
+    // RootActionableItem
+    func waitForLogin() -> Observable<(LoggedInActionableItem, ())> {
+        return loggedInActionableItemSubject.map { (loggedInItem) -> (LoggedInActionableItem, ()) in
+            (loggedInItem,())
+        }
+    }
+    
+    func didLogin(withPlayer1Name player1Name: String, player2Name: String) {
+        let loggedInActionableItem = router?.routeToLoggedIn(withPlayer1Name: player1Name, player2Name: player2Name)
+        if let loggedInActionableItem = loggedInActionableItem {
+            loggedInActionableItemSubject.onNext(loggedInActionableItem)
+        }
     }
 }

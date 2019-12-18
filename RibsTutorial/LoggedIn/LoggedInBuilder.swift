@@ -9,38 +9,78 @@
 import RIBs
 
 protocol LoggedInDependency: Dependency {
-    // TODO: Declare the set of dependencies required by this RIB, but cannot be
-    // created by this RIB.
-    var loggedInViewController: LoggedInViewControllable {get}
-    
+    var loggedInViewController: LoggedInViewControllable { get }
 }
 
-final class LoggedInComponent: Component<LoggedInDependency>, OffGameDependency {
+final class LoggedInComponent: Component<LoggedInDependency> {
+    let player1Name: String
+    let player2Name: String
+    
     fileprivate var loggedInViewController: LoggedInViewControllable {
         return dependency.loggedInViewController
     }
-    // TODO: Declare 'fileprivate' dependencies that are only used by this RIB.
+    
+    var mutableScoreStream: MutableScoreStream {
+        return shared{ScoreStreamImpl()}
+    }
+    
+    init(dependency: LoggedInDependency, player1Name: String, player2Name: String) {
+        self.player1Name = player1Name
+        self.player2Name = player2Name
+        super.init(dependency: dependency)
+    }
 }
 
 // MARK: - Builder
 
 protocol LoggedInBuildable: Buildable {
-    func build(withListener listener: LoggedInListener) -> LoggedInRouting
+    func build(withListener listener: LoggedInListener, player1Name: String, player2Name: String) -> (router: LoggedInRouting, actionableItem: LoggedInActionableItem)
 }
 
 final class LoggedInBuilder: Builder<LoggedInDependency>, LoggedInBuildable {
+    
+//    func build(withListener listener: LoggedInListener, player1Name: String, player2Name: String) -> LoggedInRouting {
+//        let component = LoggedInComponent.init(dependency: dependency, player1Name: player1Name, player2Name: player2Name)
+//
+//        let interactor = LoggedInInteractor.init(mutableScoreStream: component.mutableScoreStream)
+//        interactor.listener = listener
+//        let offGameBuilder = OffGameBuilder(dependency: component)
+//        let ticTacToeBuilder = TicTacToeBuilder(dependency: component)
+//        return LoggedInRouter(interactor: interactor,
+//                              viewController: component.loggedInViewController,
+//                              offGameBuilder: offGameBuilder,
+//                              ticTacToeBuilder: ticTacToeBuilder)
+//    }
+    
+    func build(withListener listener: LoggedInListener, player1Name: String, player2Name: String) -> (router: LoggedInRouting, actionableItem: LoggedInActionableItem) {
+        let component = LoggedInComponent(dependency: dependency,
+                                          player1Name: player1Name,
+                                          player2Name: player2Name)
+        let interactor = LoggedInInteractor(games: component.games)
+        interactor.listener = listener
+
+        let offGameBuilder = OffGameBuilder(dependency: component)
+        let router = LoggedInRouter(interactor: interactor,
+                              viewController: component.loggedInViewController,
+                              offGameBuilder: offGameBuilder)
+        return (router, interactor)
+    }
+    
 
     override init(dependency: LoggedInDependency) {
         super.init(dependency: dependency)
     }
 
-    func build(withListener listener: LoggedInListener) -> LoggedInRouting {
-        let component = LoggedInComponent(dependency: dependency)
-        let viewController = LoggedInViewController()
-        let interactor = LoggedInInteractor(presenter: viewController)
-        interactor.listener = listener
-        
-        let offGameBuilder = OffGameBuilder.init(dependency: component)
-        return LoggedInRouter(interactor: interactor, viewController: viewController, offGameBuilder: offGameBuilder)
-    }
+//    func build(withListener listener: LoggedInListener) -> LoggedInRouting {
+//        let component = LoggedInComponent(dependency: dependency)
+//        let interactor = LoggedInInteractor()
+//        interactor.listener = listener
+//
+//        let offGameBuilder = OffGameBuilder(dependency: component)
+//        let ticTacToeBuilder = TicTacToeBuilder(dependency: component)
+//        return LoggedInRouter(interactor: interactor,
+//                              viewController: component.loggedInViewController,
+//                              offGameBuilder: offGameBuilder,
+//                              ticTacToeBuilder: ticTacToeBuilder)
+//    }
 }

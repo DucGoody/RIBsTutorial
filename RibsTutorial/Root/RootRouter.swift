@@ -20,22 +20,18 @@ protocol RootViewControllable: ViewControllable {
 
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
     
-    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String) {
+    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String) -> LoggedInActionableItem{
         if let loggedOut = self.loggedOut {
             detachChild(loggedOut)
             viewController.dismiss(viewController: loggedOut.viewControllable)
             self.loggedOut = nil
         }
         
-        let loggedIn = loggedInBuilder.build(withListener: interactor)
+        let loggedIn = loggedInBuilder.build(withListener: interactor, player1Name: player1Name, player2Name: player2Name)
         attachChild(loggedIn)
+        return loggedIn.actionableItem
     }
     
-    // TODO: Constructor inject child builder protocols to allow building children.
-//    override init(interactor: RootInteractable, viewController: RootViewControllable) {
-//        super.init(interactor: interactor, viewController: viewController)
-//        interactor.router = self
-//    }
     private let loggedOutBuilder: LoggedOutBuildable
     private let loggedInBuilder: LoggedInBuildable
 

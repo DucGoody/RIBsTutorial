@@ -9,11 +9,15 @@
 import UIKit
 import RIBs
 
+protocol UrlHandler: class {
+    func handle(_ url: URL)
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     public var window: UIWindow?
     private var launchRouter: LaunchRouting?
-
+    private var urlHandler: UrlHandler?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -24,9 +28,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow.init(windowScene: caseW)
         self.window = window
 
-        let launchRouter = RootBuilder(dependency: AppComponent()).build()
-        self.launchRouter = launchRouter
-        launchRouter.launchFromWindow(window)
+        let result = RootBuilder(dependency: AppComponent()).build()
+        launchRouter = result.launchRouter
+        urlHandler = result.urlHandler
+        launchRouter?.launchFromWindow(window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -57,6 +62,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+    }
 }
 
