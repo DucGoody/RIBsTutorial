@@ -18,8 +18,13 @@ protocol TicTacToePresentableListener: class {
 final class TicTacToeViewController: UIViewController, TicTacToePresentable, TicTacToeViewControllable {
     
     weak var listener: TicTacToePresentableListener?
+    private let player2Name: String
+    private let player1Name: String
 
-    init() {
+    init(player1Name: String,
+         player2Name: String) {
+        self.player1Name = player1Name
+        self.player2Name = player2Name
         super.init(nibName: nil, bundle: nil)
     }
 

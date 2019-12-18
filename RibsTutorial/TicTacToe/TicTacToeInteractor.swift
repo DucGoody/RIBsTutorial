@@ -9,7 +9,7 @@
 import RIBs
 import RxSwift
 
-enum PlayerType: Int {
+public enum PlayerType: Int {
     case player1 = 1
     case player2
     
@@ -34,7 +34,7 @@ protocol TicTacToePresentable: Presentable {
 }
 
 protocol TicTacToeListener: class {
-    func gameDidEnd(withWinner winner: PlayerType?)
+    func ticTacToeDidEnd(with winner: PlayerType?)
 }
 
 final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, TicTacToeInteractable, TicTacToePresentableListener {
@@ -42,10 +42,18 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
     weak var router: TicTacToeRouting?
 
     weak var listener: TicTacToeListener?
+    private let mutableScoreStream: MutableScoreStream
 
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
-    override init(presenter: TicTacToePresentable) {
+//    override init(presenter: TicTacToePresentable) {
+//        super.init(presenter: presenter)
+//        presenter.listener = self
+//    }
+    
+    init(presenter: TicTacToePresentable,
+         mutableScoreStream: MutableScoreStream) {
+        self.mutableScoreStream = mutableScoreStream
         super.init(presenter: presenter)
         presenter.listener = self
     }
@@ -72,10 +80,15 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
         board[row][col] = currentPlayer
         presenter.setCell(atRow: row, col: col, withPlayerType: currentPlayer)
 
-        if let winner = checkWinner() {
-            presenter.announce(winner: winner,completion: {
-                self.listener?.gameDidEnd(withWinner: winner)
-            })
+        let endGame = checkEndGame()
+        if endGame.didEnd {
+            if let winner = endGame.winner {
+                self.mutableScoreStream.updateScore(withWinner: winner)
+            }
+            
+            presenter.announce(winner: endGame.winner) {
+                self.listener?.ticTacToeDidEnd(with: endGame.winner)
+            }
         }
     }
 
@@ -94,6 +107,18 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
         let currentPlayer = self.currentPlayer
         self.currentPlayer = currentPlayer == .player1 ? .player2 : .player1
         return currentPlayer
+    }
+    
+    private func checkEndGame() -> (winner: PlayerType?, didEnd: Bool) {
+        let winner = checkWinner()
+        if let winner = winner {
+            return (winner, true)
+        }
+        let isDraw = checkDraw()
+        if isDraw {
+            return (nil,true)
+        }
+        return (nil,false)
     }
 
     private func checkWinner() -> PlayerType? {
@@ -148,6 +173,17 @@ final class TicTacToeInteractor: PresentableInteractor<TicTacToePresentable>, Ti
         }
 
         return nil
+    }
+    
+    private func checkDraw() -> Bool {
+        for row in 0..<GameConstants.rowCount {
+            for col in 0..<GameConstants.colCount {
+                if board[row][col] == nil {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }
 

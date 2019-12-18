@@ -20,14 +20,10 @@ protocol LoggedInListener: class {
 }
 
 final class LoggedInInteractor: Interactor, LoggedInInteractable, LoggedInActionableItem {
-    func startTicTacToe() {
-        
-    }
     
-
     weak var router: LoggedInRouting?
     weak var listener: LoggedInListener?
-    private let mutableScoreStream: MutableScoreStream
+//    private let mutableScoreStream: MutableScoreStream
     private var games = [Game]()
     // TODO: Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
@@ -35,9 +31,9 @@ final class LoggedInInteractor: Interactor, LoggedInInteractable, LoggedInAction
 //        
 //    }
     
-    init(mutableScoreStream: MutableScoreStream) {
-        self.mutableScoreStream = mutableScoreStream
-    }
+//    init(mutableScoreStream: MutableScoreStream) {
+//        self.mutableScoreStream = mutableScoreStream
+//    }
     
     init(games: [Game]) {
         self.games = games
@@ -56,7 +52,11 @@ final class LoggedInInteractor: Interactor, LoggedInInteractable, LoggedInAction
         // TODO: Pause any business logic.
     }
     
-    func gameDidEnd(withWinner winner: PlayerType?) {
+    func startGame(with gameBuilder: GameBuildable) {
+        router?.routeToGame(with: gameBuilder)
+    }
+    
+    func gameDidEnd(with winner: PlayerType?) {
         router?.routeToOffGame(with: games)
     }
     

@@ -14,27 +14,15 @@ protocol RootInteractable: Interactable, LoggedOutListener, LoggedInListener {
 }
 
 protocol RootViewControllable: ViewControllable {
-    func present(viewController: ViewControllable)
-    func dismiss(viewController: ViewControllable)
+    func replaceModal(viewController: ViewControllable?)
+//    func present(viewController: ViewControllable)
+//    func dismiss(viewController: ViewControllable)
 }
 
 final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
     
-    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String) -> LoggedInActionableItem{
-        if let loggedOut = self.loggedOut {
-            detachChild(loggedOut)
-            viewController.dismiss(viewController: loggedOut.viewControllable)
-            self.loggedOut = nil
-        }
-        
-        let loggedIn = loggedInBuilder.build(withListener: interactor, player1Name: player1Name, player2Name: player2Name)
-        attachChild(loggedIn)
-        return loggedIn.actionableItem
-    }
-    
     private let loggedOutBuilder: LoggedOutBuildable
     private let loggedInBuilder: LoggedInBuildable
-
     private var loggedOut: ViewableRouting?
     
     init(interactor: RootInteractable,
@@ -48,10 +36,29 @@ final class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, Ro
     
     override func didLoad() {
         super.didLoad()
-
+        
+//        let loggedOut = loggedOutBuilder.build(withListener: interactor)
+//        self.loggedOut = loggedOut
+//        attachChild(loggedOut)
+//        viewController.present(viewController: loggedOut.viewControllable)
+    }
+    
+    func routeToLoggedIn(withPlayer1Name player1Name: String, player2Name: String) -> LoggedInActionableItem{
+        if let loggedOut = self.loggedOut {
+            detachChild(loggedOut)
+            viewController.replaceModal(viewController: nil)
+            self.loggedOut = nil
+        }
+        
+        let loggedIn = loggedInBuilder.build(withListener: interactor, player1Name: player1Name, player2Name: player2Name)
+        attachChild(loggedIn.router)
+        return loggedIn.actionableItem
+    }
+    
+    private func routeToLoggedOut() {
         let loggedOut = loggedOutBuilder.build(withListener: interactor)
         self.loggedOut = loggedOut
         attachChild(loggedOut)
-        viewController.present(viewController: loggedOut.viewControllable)
+        viewController.replaceModal(viewController: loggedOut.viewControllable)
     }
 }

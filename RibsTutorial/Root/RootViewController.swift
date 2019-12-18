@@ -8,6 +8,7 @@
 
 import RIBs
 import RxSwift
+import SnapKit
 import UIKit
 
 protocol RootPresentableListener: class {
@@ -19,6 +20,8 @@ protocol RootPresentableListener: class {
 final class RootViewController: UIViewController, RootPresentable, RootViewControllable, LoggedInViewControllable {
 
     weak var listener: RootPresentableListener?
+    private var targetViewController: ViewControllable?
+    private var animationInProgress = false
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +47,35 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
     func dismiss(viewController: ViewControllable) {
         if presentedViewController === viewController.uiviewController {
             dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func replaceModal(viewController: ViewControllable?) {
+        targetViewController = viewController
+        guard !animationInProgress else {
+            return
+        }
+        
+        if presentingViewController != nil {
+            animationInProgress = true
+            dismiss(animated: true) {
+                if self.targetViewController != nil {
+                    self.presentTargetViewController()
+                } else {
+                    self.animationInProgress = false
+                }
+            }
+        } else {
+            presentTargetViewController()
+        }
+    }
+    
+    private func presentTargetViewController() {
+        if let targetViewController = targetViewController {
+            animationInProgress = true
+            present(targetViewController.uiviewController, animated: true) {
+                self.animationInProgress = false
+            }
         }
     }
 }

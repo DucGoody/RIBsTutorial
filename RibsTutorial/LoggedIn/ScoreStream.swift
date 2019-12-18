@@ -14,7 +14,7 @@ struct Score {
     let player1Score: Int
     let player2Score: Int
 
-    static func equals(lhs: Score, rhs: Score) -> Bool {
+    public static func equals(lhs: Score, rhs: Score) -> Bool {
         return lhs.player1Score == rhs.player1Score && lhs.player2Score == rhs.player2Score
     }
 }
@@ -28,6 +28,10 @@ protocol MutableScoreStream: ScoreStream {
 }
 
 class ScoreStreamImpl: MutableScoreStream {
+    
+    public init() {
+        
+    }
 
     var score: Observable<Score> {
         return variable

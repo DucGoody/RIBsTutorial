@@ -13,17 +13,27 @@ protocol LoggedInDependency: Dependency {
 }
 
 final class LoggedInComponent: Component<LoggedInDependency> {
-    let player1Name: String
-    let player2Name: String
-    
     fileprivate var loggedInViewController: LoggedInViewControllable {
         return dependency.loggedInViewController
     }
-    
-    var mutableScoreStream: MutableScoreStream {
-        return shared{ScoreStreamImpl()}
+
+    fileprivate var games: [Game] {
+        return shared {
+            return [RandomWinAdapter(dependency: self), TicTacToeAdapter(dependency: self)]
+        }
     }
-    
+
+    var mutableScoreStream: MutableScoreStream {
+        return shared { ScoreStreamImpl() }
+    }
+
+    var scoreStream: ScoreStream {
+        return mutableScoreStream
+    }
+
+    let player1Name: String
+    let player2Name: String
+
     init(dependency: LoggedInDependency, player1Name: String, player2Name: String) {
         self.player1Name = player1Name
         self.player2Name = player2Name
