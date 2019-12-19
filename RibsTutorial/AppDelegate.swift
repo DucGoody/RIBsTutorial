@@ -18,14 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        self.window = window
-
-        let result = RootBuilder(dependency: AppComponent()).build()
-        let launchRouter = result.launchRouter
-        self.launchRouter = launchRouter
-        urlHandler = result.urlHandler
-        launchRouter.launchFromWindow(window)
+//        let window = UIWindow(frame: UIScreen.main.bounds)
+//        self.window = window
+//
+//        let result = RootBuilder(dependency: AppComponent()).build()
+//        let launchRouter = result.launchRouter
+//        self.launchRouter = launchRouter
+//        urlHandler = result.urlHandler
+//        launchRouter.launchFromWindow(window)
         return true
     }
 
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        urlHandler?.handle(url)
+//        urlHandler?.handle(url)
         return true
     }
 }
