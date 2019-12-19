@@ -39,26 +39,27 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
 
     // MARK: - RootViewControllable
 
-    func present(viewController: ViewControllable) {
-        viewController.uiviewController.modalPresentationStyle = .overCurrentContext
-        present(viewController.uiviewController, animated: true, completion: nil)
-    }
-    
-    func dismiss(viewController: ViewControllable) {
-        if presentedViewController === viewController.uiviewController {
-            dismiss(animated: true, completion: nil)
-        }
-    }
+//    func present(viewController: ViewControllable) {
+//        viewController.uiviewController.modalPresentationStyle = .overCurrentContext
+//        present(viewController.uiviewController, animated: true, completion: nil)
+//    }
+//
+//    func dismiss(viewController: ViewControllable) {
+//        if presentedViewController === viewController.uiviewController {
+//            dismiss(animated: true, completion: nil)
+//        }
+//    }
     
     func replaceModal(viewController: ViewControllable?) {
         targetViewController = viewController
+
         guard !animationInProgress else {
             return
         }
         
-        if presentingViewController != nil {
+        if presentedViewController != nil {
             animationInProgress = true
-            dismiss(animated: true) {
+            dismiss(animated: true) { [unowned self] in
                 if self.targetViewController != nil {
                     self.presentTargetViewController()
                 } else {
@@ -70,12 +71,34 @@ final class RootViewController: UIViewController, RootPresentable, RootViewContr
         }
     }
     
-    private func presentTargetViewController() {
-        if let targetViewController = targetViewController {
-            animationInProgress = true
-            present(targetViewController.uiviewController, animated: true) {
-                self.animationInProgress = false
-            }
-        }
-    }
+//    func replaceModal(viewController: ViewControllable?) {
+//          targetViewController = viewController
+//
+//          guard !animationInProgress else {
+//              return
+//          }
+//
+//          if presentedViewController != nil {
+//              animationInProgress = true
+//              dismiss(animated: true) { [weak self] in
+//                  if self?.targetViewController != nil {
+//                      self?.presentTargetViewController()
+//                  } else {
+//                      self?.animationInProgress = false
+//                  }
+//              }
+//          } else {
+//              presentTargetViewController()
+//          }
+//      }
+//
+     private func presentTargetViewController() {
+           if let targetViewController = targetViewController {
+               animationInProgress = true
+            targetViewController.uiviewController.modalPresentationStyle = .overCurrentContext
+               present(targetViewController.uiviewController, animated: true) { [unowned self] in
+                   self.animationInProgress = false
+               }
+           }
+       }
 }

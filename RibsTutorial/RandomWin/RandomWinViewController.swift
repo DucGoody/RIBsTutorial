@@ -45,9 +45,9 @@ final class RandomWinViewController: UIViewController, RandomWinPresentable, Ran
         let winnerString: String = {
             switch winner {
             case .player1:
-                return "\(player1Name) Won!"
+                return "\(player1Name) Win!"
             case .player2:
-                return "\(player2Name) Won!"
+                return "\(player2Name) Win!"
             }
         }()
         let alert = UIAlertController(title: winnerString, message: nil, preferredStyle: .alert)

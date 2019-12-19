@@ -52,10 +52,8 @@ class ScoreStreamImpl: MutableScoreStream {
             }
         }()
         variable.accept(newScore)
-//        variable.value = newScore
     }
 
     // MARK: - Private
     private var variable = BehaviorRelay<Score>(value: Score(player1Score: 0, player2Score: 0))
-//    private let variable = Variable<Score>(Score(player1Score: 0, player2Score: 0))
 }
