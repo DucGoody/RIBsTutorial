@@ -11,7 +11,7 @@ import RIBs
 class TicTacToeAdapter: Game, GameBuildable, TicTacToeListener {
     
     let id = "tictactoe"
-    let name = "Tic Tac Toe"
+    let name = "Chơi game"
     let ticTacToeBuilder: TicTacToeBuilder
     weak var gameListener: GameListener?
     

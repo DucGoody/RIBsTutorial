@@ -73,7 +73,7 @@ final class ScoreBoardViewController: UIViewController, ScoreBoardPresentable, S
         vsLabel.backgroundColor = UIColor.clear
         vsLabel.textColor = UIColor.darkGray
         vsLabel.textAlignment = .center
-        vsLabel.text = "vs"
+        vsLabel.text = "và"
         view.addSubview(vsLabel)
         vsLabel.snp.makeConstraints { (maker: ConstraintMaker) in
             maker.top.equalTo(player1Label.snp.bottom).offset(10)
@@ -94,9 +94,9 @@ final class ScoreBoardViewController: UIViewController, ScoreBoardPresentable, S
     
     private func updatePlayerLabels() {
         let player1Score = score?.player1Score ?? 0
-        player1Label?.text = "\(player1Name) (\(player1Score))"
+        player1Label?.text = "\(player1Name) win \(player1Score) lần"
 
         let player2Score = score?.player2Score ?? 0
-        player2Label?.text = "\(player2Name) (\(player2Score))"
+        player2Label?.text = "\(player2Name) win \(player2Score) lần"
     }
 }

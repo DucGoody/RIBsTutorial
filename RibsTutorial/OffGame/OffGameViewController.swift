@@ -63,12 +63,7 @@ final class OffGameViewController: UIViewController, OffGamePresentable, OffGame
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        startGameButton.rx.tap
-//        .subscribe(onNext: { [weak self] in
-//            self?.listener?.start(games)
-//        })
-//        .disposed(by: disposeBag)
-        view.backgroundColor = UIColor.yellow
+        view.backgroundColor = UIColor.white
         buildStartButtons()
     }
     
